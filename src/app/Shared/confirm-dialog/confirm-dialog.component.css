@@ -1,0 +1,23 @@
+.actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+}
+.dialog-title {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    grid-gap: 1rem;
+}
+.dialog-title h2 {
+    margin: 0;
+}
+
+.dialog-title button {
+    justify-self: centre;
+    width: 20%;
+    margin-bottom: 1rem;
+}
+.content span{
+    text-align: center;
+}

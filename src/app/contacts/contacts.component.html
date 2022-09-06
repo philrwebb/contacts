@@ -1,0 +1,39 @@
+<div class="contactcontainer">
+    <app-update-contact class="update" *ngIf="update && contact" [contact]="contact" (onUpdateContact)="updateContact($event)">
+    </app-update-contact>
+    <app-create-contact class="new" *ngIf="!update" (onAddContact)="saveContact($event)"></app-create-contact>
+    <ul class="contacts">
+        <li class="header">
+            <span>First Name</span>
+            <span>Last Name</span>
+            <span>Email</span>
+            <span>Phone</span>
+            <span>Actions</span>
+        </li>
+        <li *ngFor="let contact of contacts" class="row">
+            <span>{{contact.firstName}}</span>
+            <span>{{contact.lastName}}</span>
+            <span>{{contact.emailAddress}}</span>
+            <span>{{contact.phone}}</span>
+            <a class="actions">
+                <fa-icon (click)="onDelete(contact)" [ngStyle]="{ color: 'red' }" [icon]="faTimes"></fa-icon>
+                <fa-icon (click)="onEdit(contact)" [ngStyle]="{ color: 'white' }" [icon]="faEdit"></fa-icon>
+            </a>
+        </li>
+    </ul>
+    <div class="paging" *ngIf="xpagination">
+        <p>
+            Page: {{xpagination.CurrentPage}} of {{xpagination.TotalPageCount}} pages - Total Items:
+            {{xpagination.TotalItemCount}} - Page Size: {{xpagination.PageSize}}
+        </p>
+
+        <button class="btn" *ngIf="showNextPage" [ngStyle]="{'visibility': showNextPage}" (click)="onNext()">
+            <fa-icon [icon]="faForward"></fa-icon>
+        </button>
+
+
+        <button class="btn" *ngIf="showPrevPage" [ngStyle]="{'visibility': showPrevPage}" (click)="onPrev()">
+            <fa-icon [icon]="faBackward"></fa-icon>
+        </button>
+    </div>
+</div>

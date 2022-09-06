@@ -1,0 +1,20 @@
+<div class="dialog-title">
+  <h2>Confirmation</h2>
+  <button mat-icon-button class="close-button" (click)="onNoClick()" tabindex="-1">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+
+<div mat-dialog-content class="content">
+  <span>{{ text }}</span>
+</div>
+
+<mat-dialog-actions align="end" class="actions">
+  <button type="button" mat-button color="accent" (click)="onNoClick()">
+    No
+  </button>
+  <button type="submit" mat-raised-button color="primary" (click)="onYesClick()">
+    Yes
+  </button>
+</mat-dialog-actions>
