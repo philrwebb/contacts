@@ -1,63 +1,53 @@
 .contactcontainer {
-    width: 1200px;
-    height: 500px;
-    margin: auto;
-    font-size: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  width: 1200px;
+  height: 500px;
+  margin: auto;
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 ul {
-    padding: 10px;
-    background-color: black;
-    display: grid;
-    grid-template-columns: 1fr;
+  padding: 10px;
+  background-color: black;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 li {
-    display: grid;
-    grid-template-columns: 1fr 1fr 2fr 1fr .5fr;
-    border-bottom: white 1px solid;
-    
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr 0.5fr;
+  border-bottom: white 1px solid;
 }
 
-li.row span, li.row a{
-    color: white;
-    padding: 10px;
-    /* border: white 1px solid; */
+li.row span,
+li.row a {
+  color: white;
+  padding: 10px;
+  /* border: white 1px solid; */
 }
 li.row a {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 li.header {
-    color: black !important;
-    background-color: lightgrey !important;
-    padding: 5px;
+  color: black !important;
+  background-color: lightgrey !important;
+  padding: 5px;
 }
 
-.paging
-{
+.paging {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: center;
+  justify-content: center;
+  justify-self: space-around;
+  align-self: center;
+}
+
+/* .paging-detail {
     display: grid;
-    grid-template-columns: 4fr 1fr 1fr;
-    align-content: center;
-    justify-content: center;
-
-}
-.paging p, .paging button {
-    padding: 10px;
-    border: black 1px solid;
-    background-color: lightgrey;
-    color: black;
-    font-size: 20px;
-    margin: 10px;
-    cursor: pointer;
-}
-
-.paging p {
-    justify-self: left;
-}
-
-
-
+    grid-template-columns: 2fr 2fr;
+    align-self: 
+} */

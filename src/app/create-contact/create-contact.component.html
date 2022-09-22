@@ -1,5 +1,5 @@
 <form class="add-form"  (ngSubmit)="onSubmit()">
-    <div class="form-control">
+    <!-- <div class="form-control">
         <label for="firstname">First Name</label>
         <input type="text" name="firstname" [(ngModel)]="contact.firstName" id="firstname" placeholder = "First Name" />
     </div>
@@ -14,6 +14,22 @@
     <div class="form-control" >
         <label for="email">Email Address</label>
         <input type="email" name="email" [(ngModel)]="contact.emailAddress" id="email" placeholder="Email Address" />
-    </div>
-    <input type="submit" value="Save Contact" class="btn btn-block">
+    </div> -->
+    <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="First Name" [(ngModel)]="contact.firstName" name="firstname">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Last Name" [(ngModel)]="contact.lastName" name="lastname">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput placeholder="Phone" [(ngModel)]="contact.phone" name="phone">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input matInput placeholder="Email Address" [(ngModel)]="contact.emailAddress" name="email">
+    </mat-form-field>
+    <input mat-icon-button type="submit" value="Save Contact" class="btn btn-block">
 </form>

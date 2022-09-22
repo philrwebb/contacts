@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewEncapsulation } from '@angular/core'
 import { ContactsService } from '../api/services/contacts.service'
 import { ContactDto } from '../api/models/contact-dto'
 import { ContactCreateDto } from '../api/models/contact-create-dto'
-import { faTimes, faEdit, faForward, faBackward } from '@fortawesome/free-solid-svg-icons'
 import { Operation } from '../api/models'
 import { ConfirmDialogComponent } from '../Shared/confirm-dialog/confirm-dialog.component'
 import { MatDialog } from '@angular/material/dialog'
+import { ignoreElements } from 'rxjs'
 
 @Component({
   selector: 'app-contacts',
@@ -14,12 +14,16 @@ import { MatDialog } from '@angular/material/dialog'
 })
 export class ContactsComponent implements OnInit {
   contacts: ContactDto[] = [] as ContactDto[]
+  displayedColumns: string[] = [
+    'firstName',
+    'lastName',
+    'emailAddress',
+    'phone',
+    'actions',
+  ]
+  pagesize: number = 5
   contact: ContactDto = {} as ContactDto
   oldContact: ContactDto = {} as ContactDto
-  faTimes = faTimes
-  faEdit = faEdit
-  faForward = faForward;
-  faBackward = faBackward;
   update = false
   xpagination: {
     TotalItemCount: number
@@ -27,8 +31,8 @@ export class ContactsComponent implements OnInit {
     PageSize: number
     CurrentPage: number
   } = { TotalItemCount: 0, TotalPageCount: 0, PageSize: 0, CurrentPage: 0 }
-  showNextPage: string = 'visible'
-  showPrevPage: string = 'visible'
+  showNextPage: string = 'hidden'
+  showPrevPage: string = 'hidden'
   constructor(
     private contactsService: ContactsService,
     public dialog: MatDialog,
@@ -37,38 +41,52 @@ export class ContactsComponent implements OnInit {
   ngOnInit(): void {
     this.getContacts()
   }
+  PageSize(value: number) {
+    if (value > 0) {
+      if (this.pagesize <= this.xpagination.TotalItemCount) {
+        this.pagesize++
+      }
+    } else {
+      if (this.pagesize > 1) {
+        this.pagesize--
+      }
+    }
+    console.log(value, this.pagesize, this.xpagination.TotalItemCount)
+    this.getContacts()
+  }
   getContacts() {
     this.contactsService
       .apiContactsGet$Json$Response({
         pageNumber: 1,
-        pageSize: 5
+        pageSize: this.pagesize,
       })
       .subscribe((response) => {
         this.contacts = response.body as ContactDto[]
         this.xpagination = JSON.parse(
           response.headers.getAll('X-Pagination')![0],
         )
-        if (
-          this.xpagination.TotalPageCount > 1 &&
+        this.showNextPage =
           this.xpagination.CurrentPage < this.xpagination.TotalPageCount
-        ) {
-          this.showNextPage = 'visible'
-        } else {
-          this.showNextPage = 'hidden'
-        }
-        if (this.xpagination.CurrentPage > 1) {
-          this.showPrevPage = 'visible'
-        } else {
-          this.showPrevPage = 'hidden'
-        } 
+            ? 'visible'
+            : 'hidden'
+        this.showPrevPage =
+          this.xpagination.CurrentPage > 1 ? 'visible' : 'hidden'
       })
   }
   saveContact(contact: ContactCreateDto) {
+    var errors: string[] = this.validateContact(contact)
+    if (errors.length > 0) {
+      alert(errors.join(' | '))
+      return
+    }
+    console.log(errors)
+    if (errors.length == 0) {
     this.contactsService
       .apiContactsPost$Json({ body: contact })
       .subscribe((newContact) => {
-        this.contacts = [newContact, ...this.contacts]
+        this.getContacts()
       })
+    }
   }
   onDelete(contact: ContactDto) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -77,13 +95,14 @@ export class ContactsComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        console.log(contact?.contactId!)
         this.contactsService
           .apiContactsIdDelete({ id: contact?.contactId! })
           .subscribe()
         const contactsDeleted = this.contacts.filter(
           (c) => c.contactId !== contact.contactId,
         )
-        this.contacts = contactsDeleted
+        this.getContacts()
       }
     })
   }
@@ -126,17 +145,17 @@ export class ContactsComponent implements OnInit {
   }
   validateContact(result: ContactDto): string[] {
     var errors: string[] = []
-    if (!(result!.firstName!.length > 2) || !(result!.lastName!.length > 2)) {
+    if (!result.firstName || !result.lastName || !(result!.firstName!.length > 2) || !(result!.lastName!.length > 2)) {
       errors.push('First and Last name must be longer than 2 characters')
     }
     //validate an international phone number
     var phoneRegex = /^\+(?:[0-9] ?){6,14}[0-9]$/
-    if (!phoneRegex.test(result!.phone!)) {
+    if (!result.phone || !phoneRegex.test(result!.phone!)) {
       errors.push('Phone number must be in international format')
     }
     //validate an email address
     var emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    if (!emailRegex.test(result!.emailAddress!)) {
+    if (!result.emailAddress || !emailRegex.test(result!.emailAddress!)) {
       errors.push('Email address must be in valid format')
     }
     return errors
@@ -150,19 +169,24 @@ export class ContactsComponent implements OnInit {
     }
     this.update = false
     const patchDocument = this.CreatePatchDocument(this.oldContact, result)
-    this.contactsService
-      .apiContactsContactIdPatch({
-        body: patchDocument,
-        contactId: result.contactId!,
-      })
-      .subscribe()
+    console.log(patchDocument)
+    if (patchDocument.length > 0) {
+      this.contactsService
+        .apiContactsContactIdPatch({
+          body: patchDocument,
+          contactId: result.contactId!,
+        })
+        .subscribe()
+    } else {
+      alert('No changes detected')
+    }
   }
 
   onNext() {
     this.contactsService
       .apiContactsGet$Json$Response({
         pageNumber: this.xpagination.CurrentPage + 1,
-        pageSize: 5,
+        pageSize: this.pagesize,
       })
       .subscribe((response) => {
         this.contacts = response.body as ContactDto[]
@@ -188,7 +212,7 @@ export class ContactsComponent implements OnInit {
     this.contactsService
       .apiContactsGet$Json$Response({
         pageNumber: this.xpagination.CurrentPage - 1,
-        pageSize: 5,
+        pageSize: this.pagesize,
       })
       .subscribe((response) => {
         this.contacts = response.body as ContactDto[]

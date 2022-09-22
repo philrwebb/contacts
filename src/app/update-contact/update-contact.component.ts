@@ -1,4 +1,11 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core'
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  Input,
+  ViewChild,
+} from '@angular/core'
 import { ContactDto } from '../api/models/contact-dto'
 
 @Component({
@@ -9,11 +16,14 @@ import { ContactDto } from '../api/models/contact-dto'
 export class UpdateContactComponent implements OnInit {
   @Input() contact: ContactDto = {} as ContactDto
   @Output() onUpdateContact: EventEmitter<ContactDto> = new EventEmitter<ContactDto>()
-  constructor() {
+  @ViewChild('f') f: any
+  constructor() {}
+  ngAfterViewInit() {
+    this.f.form.valueChanges.subscribe((value: any) => {
+      console.log(value)
+    })
   }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   onSubmit() {
     this.onUpdateContact.emit(this.contact)
   }
