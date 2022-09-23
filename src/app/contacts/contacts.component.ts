@@ -5,7 +5,6 @@ import { ContactCreateDto } from '../api/models/contact-create-dto'
 import { Operation } from '../api/models'
 import { ConfirmDialogComponent } from '../Shared/confirm-dialog/confirm-dialog.component'
 import { MatDialog } from '@angular/material/dialog'
-import { ignoreElements } from 'rxjs'
 
 @Component({
   selector: 'app-contacts',
