@@ -1,0 +1,11 @@
+<form class="add-form" #f="ngForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput placeholder="First Name" [(ngModel)]="school.schoolName" name="firstname">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput placeholder="Last Name" [(ngModel)]="school.schoolLocation" name="lastname">
+    </mat-form-field>
+    <input type="submit" value="Update Contact" class="btn btn-block">
+</form>

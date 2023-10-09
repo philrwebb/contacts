@@ -1,4 +1,13 @@
 export { ContactCreateDto } from './models/contact-create-dto';
 export { ContactDto } from './models/contact-dto';
+export { CreateMeterDto } from './models/create-meter-dto';
+export { CreateSchoolDto } from './models/create-school-dto';
+export { Meter } from './models/meter';
+export { MeterDto } from './models/meter-dto';
+export { MeterReading } from './models/meter-reading';
+export { MeterType } from './models/meter-type';
 export { Operation } from './models/operation';
 export { OperationType } from './models/operation-type';
+export { SchoolDto } from './models/school-dto';
+export { SchoolType } from './models/school-type';
+export { SchoolTypeDto } from './models/school-type-dto';

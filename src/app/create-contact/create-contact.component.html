@@ -1,20 +1,4 @@
 <form class="add-form"  (ngSubmit)="onSubmit()">
-    <!-- <div class="form-control">
-        <label for="firstname">First Name</label>
-        <input type="text" name="firstname" [(ngModel)]="contact.firstName" id="firstname" placeholder = "First Name" />
-    </div>
-    <div class="form-control">
-        <label for="lastname">Last Name</label>
-        <input type="text" name="lastname" [(ngModel)]="contact.lastName" id="lastname" placeholder = "Last Name" />
-    </div>
-    <div class="form-control" >
-        <label for="phone">Phone</label>
-        <input type="text" name="phone" [(ngModel)]="contact.phone" id="phone" placeholder="Phone Number" />
-    </div>
-    <div class="form-control" >
-        <label for="email">Email Address</label>
-        <input type="email" name="email" [(ngModel)]="contact.emailAddress" id="email" placeholder="Email Address" />
-    </div> -->
     <mat-form-field appearance="outline">
         <mat-label>First Name</mat-label>
         <input matInput placeholder="First Name" [(ngModel)]="contact.firstName" name="firstname">

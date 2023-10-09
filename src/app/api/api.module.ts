@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { ContactsService } from './services/contacts.service';
+import { MetersService } from './services/meters.service';
+import { SchoolService } from './services/school.service';
 
 /**
  * Module that provides all services and configuration.
@@ -15,6 +17,8 @@ import { ContactsService } from './services/contacts.service';
   declarations: [],
   providers: [
     ContactsService,
+    MetersService,
+    SchoolService,
     ApiConfiguration
   ],
 })

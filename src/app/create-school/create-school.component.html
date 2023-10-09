@@ -1,0 +1,11 @@
+<form class="add-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>School Name</mat-label>
+        <input matInput placeholder="First Name" [(ngModel)]="school.schoolName" name="firstname">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>School Location</mat-label>
+        <input matInput placeholder="School Location" [(ngModel)]="school.schoolLocation" name="lastname">
+    </mat-form-field>
+    <input mat-icon-button type="submit" value="Save School" class="btn btn-block">
+</form>

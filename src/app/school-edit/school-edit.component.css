@@ -1,0 +1,12 @@
+.schoolcontainer {
+    width: 1200px;
+    height: 500px;
+    margin: auto;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+ul {
+    list-style: none;
+}

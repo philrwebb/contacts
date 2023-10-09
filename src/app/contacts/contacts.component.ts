@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core'
+import { Component, OnInit} from '@angular/core'
 import { ContactsService } from '../api/services/contacts.service'
 import { ContactDto } from '../api/models/contact-dto'
 import { ContactCreateDto } from '../api/models/contact-create-dto'

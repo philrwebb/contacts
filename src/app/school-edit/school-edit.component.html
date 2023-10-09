@@ -1,0 +1,11 @@
+<div class="schoolcontainer">
+  <h1>{{ school.schoolName }}</h1>
+  <p>Location: {{ school.schoolLocation }}</p>
+  <p>Type: {{ school.schoolType!.typeShortDescription }}</p>
+  <p>Number of Meters: {{ school.meters!.length }}</p>
+
+  <h2>Meters</h2>
+  <ul>
+    <li *ngFor="let meter of school.meters">{{ meter.meterName }} - {{ meter.utilityAccountNumber }} </li>
+  </ul>
+</div>
